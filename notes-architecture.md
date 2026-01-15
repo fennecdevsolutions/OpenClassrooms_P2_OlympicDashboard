@@ -88,3 +88,56 @@ Le code contient plusieurs anti-pattern et mauvaises pratiques :
   - console.log(`erreur : ${error}`);
   - console.log(`Liste des données : ${JSON.stringify(data)}`);
 
+# Étape 2 — Proposition d'une Nouvelle Architecture
+
+La nouvelle architecture prépare la connexion à une API backend et repose sur les design pattern étudiés pour assurer une application scalable et maintenable. Cette architecture a aussi pour objectif de corriger les problèmes constatés dans l'étape 1, notamment : 
+- la surcharge des components,
+- l’absence de séparation claire des responsabilités,
+- l’absence de service centralisé pour l’accès aux données,
+- le manque de typage strict.
+
+## 1 Arborescence 
+
+src/app/
+- components/
+  - HeaderComponent.ts
+  - HeaderComponent.html
+  - HeaderComponent.scss
+  - ChartComponent.ts
+  - ChartComponent.html
+  - ChartComponent.scss
+-templates/
+  - IndicatorCard.ts 
+- services/
+  - data.service.ts
+- models/
+  - interfaces.ts
+- pages/
+  - dashboard/
+    - dashboard.component.html
+    - dashboard.component.scss
+    - dashboard.component.ts
+  - country/
+    - country.component.html
+    - country.component.scss
+    - country.component.ts
+  - not-found/
+    - not-found.component.html
+    - not-found.component.scss
+    - not-found.component.ts
+- app.module.ts
+- app.component.html
+- app-routing.module.ts
+
+## 2 Description
+
+- Pages: des contenaires permettant d'afficher une instance du HeaderComponent et ChartComponent. Ils permettent aussi la navigation d'une page à l'autre. 
+- HeaderComponent: permet l'affichage selon la page du titre et des indicateurs en s'appuyant sur la template IndicatorCard.
+- ChartComponent : responsable de l'affichage des charts selon le type (pie ou line).
+- data.service.ts: un singleton centralisant les requettes HTTP et la distribution des données à tout les components de l'application.
+- interfaces.ts : contient les modèles de données pour normaliser la communication entre data.service et les components.
+
+Cette organisation permet de limiter la logique métier dans les pages et d’améliorer la maintenabilité de l’application.
+
+
+
