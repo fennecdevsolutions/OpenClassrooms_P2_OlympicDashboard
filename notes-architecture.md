@@ -80,7 +80,6 @@ Résumé des problèmes fonctionnels :
 
 Le code contient plusieurs anti-pattern et mauvaises pratiques : 
 - Violation de la responsabilité unique: affichage, logique métier et appels HTTP dans HomeComponent et CountryComponent
-- Navigation intégré dans les logiques dans HomeComponent
 - Gestion des erreurs dans les components (HTTPErrorResponse)
 - Absence de typage strict, utilisation de any (ex this.http.get<any[]>(this.olympicUrl))
 - Pas de service centralisé pour la récupération de données, chaque component récupère directement le fichier JSON 
@@ -107,7 +106,7 @@ src/app/
   - ChartComponent.html
   - ChartComponent.scss
 -templates/
-  - IndicatorCard.ts 
+  - IndicatorCard.ts
 - services/
   - data.service.ts
 - models/
