@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Olympic, Participation, DashboardData, CountryData } from '../models/interfaces';
 import { catchError, Observable, throwError, map } from 'rxjs';
 
@@ -9,8 +9,9 @@ import { catchError, Observable, throwError, map } from 'rxjs';
 export class DataService {
 
   private olympicUrl = './assets/mock/olympic.json';
+  private http = inject(HttpClient);
 
-  constructor(private http:HttpClient) { }
+  
 
 
 // dashboard data getter
@@ -36,8 +37,8 @@ public getDashboardData(): Observable<DashboardData> {
 // Country data getter
 public getCountryData(countryName : string): Observable<CountryData> {
   return this.getRawData().pipe(
-    map((data:Olympic[]) => {
-      const selectedCountry = data.find((i: Olympic) => i.country === countryName);
+    map((data:Olympic[])  => {
+      const selectedCountry = data.find((i: Olympic) => i.country.toLowerCase() === countryName.toLocaleLowerCase());
       const participations = selectedCountry?.participations.map((i: Participation) => i);
       const totalEntries = participations?.length ?? 0;
       const years = selectedCountry?.participations.map((i: Participation) => i.year) ?? [];

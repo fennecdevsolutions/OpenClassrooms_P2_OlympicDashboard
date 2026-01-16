@@ -26,3 +26,9 @@ export interface CountryData {
   years: number[];
   medals: string[];
 }
+
+export interface HeaderData {
+label: string;
+value: number;
+
+}
