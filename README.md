@@ -1,29 +1,60 @@
-# OlympicGamesStarter
+# Olympic Games Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+## Présentation
 
-Don't forget to install your node_modules before starting (`npm install`).
+Cette application Angular permet de visualiser des données olympiques à l’aide d'indicateurs et des graphiques interactifs. 
+Elle repose sur une architecture modulaire séparant clairement les pages, les composants d’affichage et la logique métier afin de garantir la lisibilité, la maintenabilité et l’évolutivité du projet.
 
-## Development server
+## Prérequis et Installation 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+#### Prérequis : 
+- Node.js 
+- Angular CLI
 
-## Build
+#### Installation :
+1. Cloner le dépôt :
+```bash
+git clone https://github.com/fennecdevsolutions/OpenClassrooms_P1_Refactoring.git
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+2. Lancer le serveur de development :
+```bash
+ng serve
+```
 
-## Where to start
+3. Accéder à l'application 
+```bash
+http://localhost:4200
+```
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+#### Structure du projet
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+L’application est organisée autour de :
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+- Pages : composants conteneurs responsables de la récupération des données et de la navigation
+- Composants d’affichage : composants de présentation (header, charts)
+- Service de données : centralisation de la récupération et du traitement des données
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+Cette organisation permet une séparation claire des responsabilités et facilite l’évolution du projet.
 
-You're now ready to implement the requested features.
+## Description et Fonctionnalités
 
-Good luck!
+Une fois l'application lancée, le dashboard s'affiche et contient deux parties principales :
+- Un header contenant le titre et des indicateurs sous forme de cartes (nombre de JO et nombre de pays participants)
+- Un Pie Chart interactif affichant le nombre total de médailles par pays.
+
+En cliquant sur la portion du pie chart représentant un pays, l'application vous redirigera vers la page dédiée à ce pays contenant aussi deux parties principales : 
+- Un header des indicateurs spécifiques au pays sélectionné (nombre de participation, nombre de médailles, nombre d'athlètes)
+- Un Line Chart affichant les médailles gagnées par JO.
+- Il est possible de revenir vers le dashboard en utilisant le bouton "Go back"
+
+Il est aussi possible de naviguer directement vers la page de chaque pays en utilisant l'URL dédiée (remplacer "nom_du_pays" par le nom du pays): 
+```bash
+http://localhost:4200/country/"nom_du_pays"
+```
+
+Par exemple : 
+```bash
+http://localhost:4200/country/France
+```
+
