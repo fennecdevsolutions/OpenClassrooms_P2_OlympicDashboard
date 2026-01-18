@@ -1,0 +1,13 @@
+<div>
+    <div class="center">
+      <div>{{ title | titlecase}}</div>
+    </div>
+    <div class="split">
+      @for (card of cards; track card) {
+      <div>
+        <p> {{ card.label }}</p>
+        <p>{{ card.value }}</p>
+      </div>
+    }
+    </div>
+</div>

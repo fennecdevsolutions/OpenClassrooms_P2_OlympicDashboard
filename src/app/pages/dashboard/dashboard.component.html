@@ -1,0 +1,9 @@
+<h2>Olympic games app</h2>
+<hr/>
+<div>
+  <app-header
+  [title]="titlePage"
+  [cards]="cards" >
+   </app-header>
+  <app-pie-chart (countrySelected)="onCountrySelected($event)" [countries]="countries" [medalsPerCountry]="medalsPerCountry"> ></app-pie-chart>
+</div>
