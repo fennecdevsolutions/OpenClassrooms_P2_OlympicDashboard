@@ -17,9 +17,11 @@ export interface DashboardData {
   totalCountries: number;
   countries: string[];
   medalsPerCountry: number[];
+  iDs: number[];
 }
 
 export interface CountryData {
+  countryName: string;
   totalEntries: number;
   totalMedals: number;
   totalAthletes: number;

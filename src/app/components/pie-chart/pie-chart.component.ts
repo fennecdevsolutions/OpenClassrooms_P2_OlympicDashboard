@@ -7,9 +7,10 @@ import { Chart } from 'chart.js/auto';
   styleUrl: './pie-chart.component.scss'
 })
 export class PieChartComponent implements AfterViewInit, OnChanges {
-@Output() countrySelected = new EventEmitter<string>();
+@Output() countrySelected = new EventEmitter<number>();
 @Input() countries!: string[];
 @Input() medalsPerCountry!: number[];
+@Input() IDs!: number[];
 
 @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -46,9 +47,9 @@ ngOnChanges(changes: SimpleChanges): void {
           if (e.native) {
             const points = this.pieChart.getElementsAtEventForMode(e.native, 'point', { intersect: true }, true)
             if (points.length) {
-              const firstPoint = points[0];
-              const countryName = this.pieChart.data.labels ? this.pieChart.data.labels[firstPoint.index] : '';
-              this.countrySelected.emit(countryName as string);
+              const clickedIndex = points[0].index;
+              const countryId = this.IDs[clickedIndex];
+              this.countrySelected.emit(countryId);
             }
           }
         }

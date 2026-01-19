@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import Chart from 'chart.js/auto';
 import { HeaderData } from 'src/app/models/interfaces';
 import { DataService } from 'src/app/services/data.service';
@@ -17,25 +17,31 @@ export class CountryComponent implements OnInit {
   public totalEntries!: number;
   public totalMedals!: number;
   public totalAthletes!: number;
-  public countryName!: string;
+  public countryId!: number;
   public years!: number[];
   public medals!: number[];
   public cards!: HeaderData[];
 
   // Injection moderne suite recommendation ESLint
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private dataService = inject(DataService);
 
 
   ngOnInit() {
-    const fetchedCountryName =this.route.snapshot.paramMap.get('countryName');
-    if (fetchedCountryName === null) {
+    const fetchedCountryId =this.route.snapshot.paramMap.get('id');
+    if (fetchedCountryId === null) {
       return;
     }
-    this.countryName = fetchedCountryName;
-    this.titlePage = this.countryName;
-    this.dataService.getCountryData(this.countryName).subscribe({
+    this.countryId = Number(fetchedCountryId);
+    
+    this.dataService.getCountryData(this.countryId).subscribe({
       next: (countryData) => {
+        if (!countryData) {
+          this.router.navigate(['not-found']);
+          return;
+        }
+        this.titlePage = countryData.countryName;
         this.totalEntries = countryData.totalEntries;
         this.totalMedals = countryData.totalMedals;
         this.totalAthletes = countryData.totalAthletes;

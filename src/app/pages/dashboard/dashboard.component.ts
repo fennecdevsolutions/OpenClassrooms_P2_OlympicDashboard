@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   public totalCountries!: number;
   public totalJOs!: number;
   public countries!: string[];
+  public iDs !: number[];
   public medalsPerCountry!: number[]
   public cards!: HeaderData[];
   titlePage = "Medals per Country";
@@ -32,6 +33,7 @@ export class DashboardComponent implements OnInit {
         this.totalJOs = dashboard.totalJOs;
         this.totalCountries = dashboard.totalCountries;
         this.countries = dashboard.countries;
+        this.iDs=dashboard.iDs;
         this.medalsPerCountry = dashboard.medalsPerCountry;
         this.cards = [
           { label: 'Number of countries', value: this.totalCountries },
@@ -45,9 +47,9 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  onCountrySelected(country: string) {
+  onCountrySelected(iD: number) {
 
-  this.router.navigate(['country', country]);
+  this.router.navigate(['country', iD]);
 
 }
 

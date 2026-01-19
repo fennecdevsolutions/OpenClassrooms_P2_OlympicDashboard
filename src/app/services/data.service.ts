@@ -21,13 +21,15 @@ public getDashboardData(): Observable<DashboardData> {
     map((data: Olympic[]) => {
           const totalJOs = Array.from(new Set(data.map((i: Olympic) => i.participations.map((f: Participation) => f.year)).flat())).length;
           const countries: string[] = data.map(i => i.country);
+          const iDs : number[] = data.map(i => i.id);
           const totalCountries = countries.length;
           const medalsPerCountry = data.map(i =>i.participations.reduce((acc, i) => acc + i.medalsCount, 0));
       return {
         totalJOs,
         totalCountries,
         countries,
-        medalsPerCountry
+        medalsPerCountry,
+        iDs
       };
     })
 
@@ -35,23 +37,22 @@ public getDashboardData(): Observable<DashboardData> {
 }
 
 // Country data getter
-public getCountryData(countryName : string): Observable<CountryData> {
+public getCountryData(countryiD : number): Observable<CountryData | null> {
   return this.getRawData().pipe(
     map((data:Olympic[])  => {
-      const selectedCountry = data.find((i: Olympic) => i.country.toLowerCase() === countryName.toLocaleLowerCase());
-      const participations = selectedCountry?.participations.map((i: Participation) => i);
-      const totalEntries = participations?.length ?? 0;
-      const years = selectedCountry?.participations.map((i: Participation) => i.year) ?? [];
-      const medals = selectedCountry?.participations.map((i: Participation) => i.medalsCount.toString()) ?? [];
-      const totalMedals = medals.reduce((accumulator: number, item: string) => accumulator + parseInt(item), 0);
-      const nbAthletes = selectedCountry?.participations.map((i: Participation) => i.athleteCount.toString()) ?? []
-      const totalAthletes = nbAthletes.reduce((accumulator: number, item: string) => accumulator + parseInt(item), 0);
+      const selectedCountry = data.find((i: Olympic) => i.id === countryiD);
+      if (!selectedCountry) {
+        return null;
+      }
+      const participations = selectedCountry.participations.map((i: Participation) => i);
+      
     return {
-        totalEntries,
-        totalMedals,
-        totalAthletes,
-        years,
-        medals
+        countryName : selectedCountry.country,
+        totalEntries : participations.length,
+        totalMedals : participations.reduce((accumulator: number, item: Participation) => accumulator + item.medalsCount, 0),
+        totalAthletes: participations.reduce((accumulator: number, item: Participation) => accumulator + item.athleteCount, 0),
+        years : participations.map((i: Participation) => i.year) ?? [],
+        medals : participations.map((i: Participation) => i.medalsCount.toString()) ?? []
       };
     
     
