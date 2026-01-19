@@ -2,6 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import Chart from 'chart.js/auto';
 import { HeaderData } from 'src/app/models/interfaces';
+import { UiState } from 'src/app/models/ui-state';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -17,10 +18,13 @@ export class CountryComponent implements OnInit {
   public totalEntries!: number;
   public totalMedals!: number;
   public totalAthletes!: number;
-  public countryId!: number;
+  
   public years!: number[];
   public medals!: number[];
   public cards!: HeaderData[];
+
+  //state declaration
+  Uistate !: UiState;
 
   // Injection moderne suite recommendation ESLint
   private route = inject(ActivatedRoute);
@@ -29,15 +33,22 @@ export class CountryComponent implements OnInit {
 
 
   ngOnInit() {
+    this.Uistate = 'loading';
+
     const fetchedCountryId =this.route.snapshot.paramMap.get('id');
+    
+    // If cannot retrieve Id, set state to empty
     if (fetchedCountryId === null) {
+      this.Uistate = 'empty'
       return;
     }
-    this.countryId = Number(fetchedCountryId);
     
-    this.dataService.getCountryData(this.countryId).subscribe({
+    
+    
+    this.dataService.getCountryData(Number(fetchedCountryId)).subscribe({
       next: (countryData) => {
-        if (!countryData) {
+        if (!countryData || countryData.years.length === 0) {
+          
           this.router.navigate(['not-found']);
           return;
         }
@@ -52,9 +63,13 @@ export class CountryComponent implements OnInit {
           { label: 'Total Number of medals', value: this.totalMedals },
           { label: 'Total Number of athletes', value: this.totalAthletes }
         ];
+        this.Uistate = 'success';
         
-      }
-    })
+      },
+      error: () => {
+      this.Uistate = 'error';
+    
+    }})
   
     
   }
