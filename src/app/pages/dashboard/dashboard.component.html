@@ -1,9 +1,16 @@
-<h2>Olympic games app</h2>
-<hr/>
+<div class="dashboard-container">
+<section class="page-header">
+  <h1 class="page-title" class="center">Olympic Games Dashboard</h1>
+  <p class="page-intro" class="center">
+    Cette application permet de visualiser les performances des pays aux Jeux Olympiques
+    à travers des indicateurs synthétiques et des graphiques interactifs.
+  </p>
+</section>
 <div>
   <app-header
   [title]="titlePage"
   [cards]="cards" >
    </app-header>
   <app-pie-chart (countrySelected)="onCountrySelected($event)" [countries]="countries" [medalsPerCountry]="medalsPerCountry"> ></app-pie-chart>
+</div>
 </div>
