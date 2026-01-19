@@ -5,6 +5,11 @@
 }
 
 
+.page-header{
+     margin-bottom: 2rem;
+}
+
+
 .page-title {
   font-size: 1.8rem;
   font-weight: 600;
@@ -14,7 +19,11 @@
 
 .page-intro {
   font-size: 0.95rem;
-  color: #666;
+  color: #222;
   max-width: 800px;
   line-height: 1.5;
+  margin: 0 auto;
+  text-align: center;
 }
+
+

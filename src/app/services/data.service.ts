@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Olympic, Participation, DashboardData, CountryData } from '../models/interfaces';
-import { catchError, Observable, throwError, map } from 'rxjs';
+import { catchError, Observable, throwError, map, delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +65,7 @@ public getCountryData(countryiD : number): Observable<CountryData | null> {
 // get raw data from JSON
  private getRawData (): Observable<Olympic[]>{
 
-  return this.http.get<Olympic[]>(this.olympicUrl).pipe(catchError(this.httpErrorHandler));
+  return this.http.get<Olympic[]>(this.olympicUrl).pipe(catchError(this.httpErrorHandler),delay(1500));
 
 }
 
