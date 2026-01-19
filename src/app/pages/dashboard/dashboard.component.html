@@ -1,9 +1,74 @@
-<h2>Olympic games app</h2>
-<hr/>
-<div>
-  <app-header
+<div class="page-container">
+
+  <!-- Page header-->
+  <section class="page-header">
+    <h1 class="page-title center">Olympic Games Dashboard</h1>
+      <p class="page-intro center">
+        This application allows users to visualize the performance of countries
+        at the Olympic Games through summary indicators and interactive charts.
+      </p>
+  </section>
+  
+  <!-- Loading display (gray boxes) -->
+
+@if (UiState === 'loading') {
+
+  <div class="skeleton-container" aria-label="Chargement des données">
+    <div class="skeleton chartAndCards"></div>
+    <div class="skeleton chartAndCards"></div>
+  </div>
+}
+ 
+<!-- Error display-->
+
+@else if (UiState === 'error') {
+  <div class="error-message center">
+    <p>
+      An error has occured during data fetching! 
+    </p>
+  </div>
+
+  <div class="center">
+    <a routerLink="">Go back</a>
+  </div>
+
+}
+
+<!--   Empty display -->
+
+@else if (UiState === 'empty') {
+  <div class="error-message center">
+    <p>
+      Data not found! 
+    </p>
+  </div>
+
+  <div>
+    <a routerLink="">Go back</a>
+  </div>
+
+}
+
+<!-- Display content on success-->
+
+@else if (UiState === 'success') {
+<div class="page-content">
+  <div class="col-header">
+  <app-header 
   [title]="titlePage"
   [cards]="cards" >
-   </app-header>
-  <app-pie-chart (countrySelected)="onCountrySelected($event)" [countries]="countries" [medalsPerCountry]="medalsPerCountry"> ></app-pie-chart>
+  </app-header>
+  </div>
+
+  <div class="col-chart">
+  <app-pie-chart 
+  (countrySelected)="onCountrySelected($event)" 
+  [countries]="countries" 
+  [medalsPerCountry]="medalsPerCountry" 
+  [IDs]="iDs" >
+</app-pie-chart>
+</div>
+
+</div>
+}
 </div>

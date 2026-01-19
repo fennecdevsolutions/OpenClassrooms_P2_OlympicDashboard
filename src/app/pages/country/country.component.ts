@@ -1,7 +1,8 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import Chart from 'chart.js/auto';
 import { HeaderData } from 'src/app/models/interfaces';
+import { UiState } from 'src/app/models/ui-state';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -17,25 +18,41 @@ export class CountryComponent implements OnInit {
   public totalEntries!: number;
   public totalMedals!: number;
   public totalAthletes!: number;
-  public countryName!: string;
+  
   public years!: number[];
   public medals!: number[];
   public cards!: HeaderData[];
 
+  //state declaration
+  Uistate !: UiState;
+
   // Injection moderne suite recommendation ESLint
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private dataService = inject(DataService);
 
 
   ngOnInit() {
-    const fetchedCountryName =this.route.snapshot.paramMap.get('countryName');
-    if (fetchedCountryName === null) {
+    this.Uistate = 'loading';
+
+    const fetchedCountryId =this.route.snapshot.paramMap.get('id');
+    
+    // If cannot retrieve Id, set state to empty
+    if (fetchedCountryId === null) {
+      this.Uistate = 'empty'
       return;
     }
-    this.countryName = fetchedCountryName;
-    this.titlePage = this.countryName;
-    this.dataService.getCountryData(this.countryName).subscribe({
+    
+    
+    
+    this.dataService.getCountryData(Number(fetchedCountryId)).subscribe({
       next: (countryData) => {
+        if (!countryData || countryData.years.length === 0) {
+          
+          this.router.navigate(['not-found']);
+          return;
+        }
+        this.titlePage = countryData.countryName;
         this.totalEntries = countryData.totalEntries;
         this.totalMedals = countryData.totalMedals;
         this.totalAthletes = countryData.totalAthletes;
@@ -46,9 +63,13 @@ export class CountryComponent implements OnInit {
           { label: 'Total Number of medals', value: this.totalMedals },
           { label: 'Total Number of athletes', value: this.totalAthletes }
         ];
+        this.Uistate = 'success';
         
-      }
-    })
+      },
+      error: () => {
+      this.Uistate = 'error';
+    
+    }})
   
     
   }

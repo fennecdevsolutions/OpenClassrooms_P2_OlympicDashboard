@@ -1,16 +1,56 @@
-<div>
+<div class="page-container">
+  <!-- Page header-->
+  <section class="page-header">
+    <h1 class="page-title center">Olympic Games Dashboard</h1>
+  </section>
+
+  @if (Uistate === 'loading') {
+<div class="skeleton-container" aria-label="Chargement des données">
+    <div class="skeleton chartAndCards"></div>
+    <div class="skeleton chartAndCards"></div>
+</div>
+}
+
+@else if (Uistate === 'error') {
+  <div class="error-message center">
+    <p class="center">
+      An error has occured during data fetching! 
+    </p>
+  </div>
+  <div class="center">
+    <a routerLink="">Go back</a>
+  </div>
+}
+
+@else if (Uistate === 'empty') {
+  <div class="error-message center">
+    <p>
+      Data not found! 
+    </p>
+  </div>
+  <div class>
+    <a routerLink="">Go back</a>
+  </div>
+}
+@else if (Uistate === 'success') {
+<div class="page-content">
+  <div class="col-header">
    <app-header
   [title]="titlePage"
   [cards]="cards" >
    </app-header>
-  <div class="chart-container wrapper-container">
-    <div class="container">
-      <app-line-chart [years]="years", [medals]="medals"></app-line-chart>
-      <h2>Date</h2>
-    </div>
   </div>
-  
+  <div class="col-chart">
+   <app-line-chart
+    [years]="years",
+    [medals]="medals">
+  </app-line-chart>
+      <h2 class="center"> Date</h2>
+  </div>
+</div>
+ 
   <div class="center">
     <a routerLink="">Go back</a>
   </div>
+}
 </div>
