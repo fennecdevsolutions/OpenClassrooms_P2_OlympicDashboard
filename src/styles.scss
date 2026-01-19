@@ -1,68 +1,133 @@
-/* You can add global styles to this file, and also import other style files */
-.heading {
-    flex-direction: column;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+  color: #222;
+  background-color: #fff;
 }
 
 .center {
-    display: flex;
-    justify-content: center;
-    margin: 5px;
-
-    div {
-        background: #0b868f;
-        padding: 10px;
-        border-radius: 10px;
-        color: white;
-    }
+  text-align: center;
 }
 
-.split {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-    margin: 5px;
 
-    div {
-        padding: 10px;
-        border: solid #0b868f 1px;
-        border-radius: 10px;
-        color: gray;
-        margin: 0px;
+ //  PAGE LAYOUT
 
-        p {
-            text-align: center;
-            margin: 0;
-        }
-
-        p:last-child {
-            font-weight: bold;
-            color: black;
-        }
-    }
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
 
-// Squeleton classes
+.page-header {
+  margin-bottom: 3rem;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.page-intro {
+  font-size: 1rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-content {
+  display: grid;
+  gap: 3rem;
+  align-items: start;
+
+  
+}
+
+
+// RESPONSIVE
+
+// DESKTOP >= 1200px
+@media (min-width: 1200px) {
+  .page-content {
+    grid-template-columns: repeat(12,1fr);
+  }
+
+  .col-header {
+    grid-column: span 4;
+  }
+  .col-chart {
+    grid-column: span 8;
+  }
+}
+
+// TABLETTE 768px-1199px
+@media (min-width: 768px) and (max-width: 1199px) {
+  .page-content {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .col-header,
+  .col-chart {
+    grid-column: span 8;
+  }
+}
+
+// SMARTPHONE <=767px
+@media (max-width: 767px) {
+  .page-content {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .col-header,
+  .col-chart {
+    grid-column: span 4;
+  }
+}
+
+
+ // Skeleton for loading state
 
 .skeleton-container {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 2rem;
+  justify-content: center;
 }
 
 .skeleton {
-  background-color: #e0e0e0;
-  border-radius: 4px;
+  background-color: #e5e5e5;
+  border-radius: 8px;
+  width: 100%;
+  height: 220px;
+  animation: pulse 1.5s infinite ease-in-out;
 }
 
-.skeleton.chartAndCards {
-  height: 80px;
-  width: 100%;
+.chartAndCards {
+  max-width: 520px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
 }
 
 .error-message {
-  margin-top: 2rem;
-  color: #d32f2f;
-  margin: 0 auto;
-  text-align: center;
+  color: #b00020;
+  margin-bottom: 1rem;
 }

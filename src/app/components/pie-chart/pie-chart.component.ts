@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
 @Component({
@@ -20,6 +20,13 @@ ngAfterViewInit(): void {
   this.createPieChart();
 }
 
+@HostListener('window:resize')
+OnResize() {
+  if (this.pieChart) {
+    this.pieChart.resize();
+  }
+}
+
 ngOnChanges(changes: SimpleChanges): void {
     // added chart update to fix empty chart due to late data
     if (this.pieChart && (changes['countrie'] || changes['medalsPerCountry'])) {
@@ -28,6 +35,7 @@ ngOnChanges(changes: SimpleChanges): void {
       this.pieChart.update();
     }
   }
+
   createPieChart () {
   this.pieChart = new Chart(this.canvasRef.nativeElement,{
     type: 'pie',
@@ -41,7 +49,9 @@ ngOnChanges(changes: SimpleChanges): void {
         }],
       },
       options: {
-        aspectRatio: 2.5,
+        responsive: true,
+        maintainAspectRatio: false,
+        //aspectRatio: 2.5,
         // Output selected country name on click event for Dashboard Component navigation
         onClick: (e) => {
           if (e.native) {

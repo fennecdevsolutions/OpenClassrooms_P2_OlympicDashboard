@@ -2,8 +2,35 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1.5rem;
+  display: grid;
+  gap: 20px;
+
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: repeat(12, 1fr);
+  }
 }
 
+.col-full {
+  grid-column: 1 / -1; // Spans all columns
+}
+
+.col-side-left {
+  grid-column: 1 / -1;
+  @media screen and (min-width: 1200px) {
+    grid-column: span 4; // Side-by-side on desktop
+  }
+
+.col-side-right {
+  grid-column: 1 / -1;
+  @media screen and (min-width: 1200px) {
+    grid-column: span 8; // Side-by-side on desktop
+  }
+}
+}
 
 .page-header{
      margin-bottom: 2rem;
