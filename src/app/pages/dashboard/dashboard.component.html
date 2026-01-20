@@ -11,7 +11,7 @@
   
   <!-- Loading display (gray boxes) -->
 
-@if (UiState === 'loading') {
+@if (uiState === 'loading') {
 
   <div class="skeleton-container" aria-label="Chargement des données">
     <div class="skeleton chartAndCards"></div>
@@ -21,7 +21,7 @@
  
 <!-- Error display-->
 
-@else if (UiState === 'error') {
+@else if (uiState === 'error') {
   <div class="error-message center">
     <p>
       An error has occured during data fetching! 
@@ -36,7 +36,7 @@
 
 <!--   Empty display -->
 
-@else if (UiState === 'empty') {
+@else if (uiState === 'empty') {
   <div class="error-message center">
     <p>
       Data not found! 
@@ -51,7 +51,7 @@
 
 <!-- Display content on success-->
 
-@else if (UiState === 'success') {
+@else if (uiState === 'success') {
 <div class="page-content">
   <div class="col-header">
   <app-header 
