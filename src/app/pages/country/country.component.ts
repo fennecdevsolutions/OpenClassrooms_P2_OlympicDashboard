@@ -1,4 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router} from '@angular/router';
 import Chart from 'chart.js/auto';
 import { HeaderData } from 'src/app/models/interfaces';
@@ -13,10 +14,10 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class CountryComponent implements OnInit {
   
-  public lineChart!: Chart<"line", string[], number>;
+  lineChart!: Chart<"line", string[], number>;
   public titlePage!: string;
-  public totalEntries!: number;
-  public totalMedals!: number;
+  totalEntries!: number;
+  totalMedals!: number;
   public totalAthletes!: number;
   
   public years!: number[];
@@ -30,6 +31,7 @@ export class CountryComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dataService = inject(DataService);
+  private destroyRef = inject(DestroyRef);
 
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class CountryComponent implements OnInit {
     
     
     
-    this.dataService.getCountryData(Number(fetchedCountryId)).subscribe({
+    this.dataService.getCountryData(Number(fetchedCountryId)).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (countryData) => {
         if (!countryData || countryData.years.length === 0) {
           

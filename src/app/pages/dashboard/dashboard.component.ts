@@ -1,9 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { HeaderData } from 'src/app/models/interfaces';
 import { UiState } from 'src/app/models/ui-state';
 import { DataService } from 'src/app/services/data.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +14,11 @@ import { DataService } from 'src/app/services/data.service';
 export class DashboardComponent implements OnInit {
 
   // States declaration
-  UiState !: UiState;
- 
+  uiState !: UiState;
+  // properties and objects
   public pieChart!: Chart<"pie", number[], string>;
-  public totalCountries!: number;
-  public totalJOs!: number;
+  totalCountries!: number;
+  totalJOs!: number;
   public countries!: string[];
   public iDs !: number[];
   public medalsPerCountry!: number[]
@@ -27,16 +28,18 @@ export class DashboardComponent implements OnInit {
   // Injection moderne suite recommendation ESLint
   private router = inject(Router);
   private dataService = inject(DataService);
+  private destroyRef = inject(DestroyRef);
 
 
   ngOnInit() {
-    this.UiState = 'loading';
+    this.uiState = 'loading';
 
     
-    this.dataService.getDashboardData().subscribe({
+    this.dataService.getDashboardData().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (dashboard) => {
         if(!dashboard || dashboard.countries.length === 0) {
-          this.UiState = 'empty';
+          this.uiState = 'empty';
+          return;
         }
 
         this.totalJOs = dashboard.totalJOs;
@@ -49,11 +52,11 @@ export class DashboardComponent implements OnInit {
           { label: 'Number of JOs', value: this.totalJOs },
         ];
         this.titlePage = "Medals per Country";
-        this.UiState = 'success';
+        this.uiState = 'success';
         
       },
     error: () => {
-      this.UiState = 'error';
+      this.uiState = 'error';
     }
   
     });

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Olympic, Participation, DashboardData, CountryData } from '../models/interfaces';
-import { catchError, Observable, throwError, map, delay } from 'rxjs';
+import { catchError, Observable, throwError, map} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
