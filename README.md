@@ -55,6 +55,6 @@ http://localhost:4200/country/ID
 
 Par exemple : 
 ```bash
-http://localhost:4200/country/France
+http://localhost:4200/country/5
 ```
 
