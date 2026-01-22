@@ -39,12 +39,7 @@ export class CountryComponent implements OnInit {
 
     const fetchedCountryId =this.route.snapshot.paramMap.get('id');
     
-    // If cannot retrieve Id, set state to empty
-    if (fetchedCountryId === null) {
-      this.Uistate = 'empty'
-      return;
-    }
-    
+      
     
     
     this.dataService.getCountryData(Number(fetchedCountryId)).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({

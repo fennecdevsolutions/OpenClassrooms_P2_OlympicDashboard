@@ -65,7 +65,7 @@ public getCountryData(countryiD : number): Observable<CountryData | null> {
 // get raw data from JSON
  private getRawData (): Observable<Olympic[]>{
 
-  return this.http.get<Olympic[]>(this.olympicUrl).pipe(catchError(this.httpErrorHandler));//, delay(2500));
+  return this.http.get<Olympic[]>(this.olympicUrl).pipe(catchError(this.httpErrorHandler))//,delay(2500));
 
 }
 
