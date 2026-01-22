@@ -48,9 +48,9 @@ En cliquant sur la portion du pie chart représentant un pays, l'application vou
 - Un Line Chart affichant les médailles gagnées par JO.
 - Il est possible de revenir vers le dashboard en utilisant le bouton "Go back"
 
-Il est aussi possible de naviguer directement vers la page de chaque pays en utilisant l'URL dédiée (remplacer "nom_du_pays" par le nom du pays): 
+Il est aussi possible de naviguer directement vers la page de chaque pays en utilisant l'URL dédiée (remplacer "ID" par l'id' du pays): 
 ```bash
-http://localhost:4200/country/"nom_du_pays"
+http://localhost:4200/country/ID
 ```
 
 Par exemple : 
